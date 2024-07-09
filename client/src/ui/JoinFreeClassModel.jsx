@@ -22,7 +22,7 @@ const JoinFreeClassModel = ({ onClick }) => {
     //checking age validation
     const age = parseInt(childAge, 10);
     if (age < 3 || age > 20) {
-      setErrorAge("child age should be maximum of 20 years");
+      setErrorAge("child age should be maximum of 3-20 years");
       return;
     } else {
       setErrorAge("");
