@@ -14,6 +14,8 @@ const JoinFreeClassModel = ({ onClick }) => {
   const [parentPhoneNumber, setParentPhoneNumber] = useState("");
   const [errorAge, setErrorAge] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
+//cors compatibility
+  axios.defaults.withCredentials = true;
 
   const handleJoinClassSubmit = (e) => {
     e.preventDefault();
