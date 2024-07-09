@@ -10,7 +10,7 @@ const AboutUsHover = () => {
             className="border-b border-gray-400 bg-gradient-to-r from-cyan-500 to-green-400 px-10 flex py-2 
             rounded-b-lg text-balance"
           >
-          <button>
+          <button className="hover:text-green-300 focus:text-green-300">
             {item.aboutus}
             </button>
           </div>

@@ -64,13 +64,16 @@ const Header = () => {
           </button>
           <button
             onMouseEnter={() => setIsAboutUsHovered(true)}
-            onMouseLeave={() => setIsAboutUsHovered(false)}
+           
             className="flex items-center"
           >
             <p>About us</p>
             <IoIosArrowDown />
             {isAboutUsHovered && (
-              <div className="z-20 absolute mt-56">
+              <div 
+              onMouseEnter={() => setIsAboutUsHovered(true)}
+              onMouseLeave={() => setIsAboutUsHovered(false)}
+              className="z-20 absolute mt-56">
                 <AboutUsHover />
               </div>
             )}
@@ -84,13 +87,16 @@ const Header = () => {
           </button>
           <button
             onMouseEnter={() => setIsExsistingHovered(true)}
-            onMouseLeave={() => setIsExsistingHovered(false)}
+        
             className="flex items-center"
           >
             <p>Existing student</p>
             <IoIosArrowDown />
             {isExistingHovered && (
-              <div className="z-20 absolute mt-20">
+              <div 
+               onMouseEnter={() => setIsExsistingHovered(true)}
+               onMouseLeave={() => setIsExsistingHovered(false)}
+              className="z-20 absolute mt-20">
                 <ExsistingHover />
               </div>
             )}
