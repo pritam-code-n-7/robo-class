@@ -13,18 +13,14 @@ connectDB();
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-	origin:"*",
-	methods:["POST", "GET"],
-	credentials:true,
-}));
+app.use(cors());
 
 // routes
 app.get("/", (req, res) => {
 	res.send("Hello World. This route is for testing only.");
 });
 
-app.post("/api/join-free-class", async (req, res) => {
+app.post("/join-free-class", async (req, res) => {
 	try {
 		const { parentEmail, childName, childAge, parentPhoneNumber } = req.body;
 
@@ -60,7 +56,7 @@ app.post("/api/join-free-class", async (req, res) => {
 	}
 });
 
-app.post("/api/join-community", async (req, res) => {
+app.post("/join-community", async (req, res) => {
 	try {
 		const { email } = req.body;
 		if (!email) {
@@ -90,7 +86,7 @@ app.post("/api/join-community", async (req, res) => {
 	}
 });
 
-app.post("/api/join-teacher-team", async (req, res) => {
+app.post("/join-teacher-team", async (req, res) => {
 	try {
 		const { email, fullName, phoneNumber, message } = req.body;
 

@@ -20,6 +20,7 @@ const bookFreeClassSchema = new Schema(
 		parentPhoneNumber: {
 			type: String,
 			required: [true, "Parent's phone number is required"],
+			min:[10,"It must be 10 digit phone number"]
 		},
 	},
 	{ timestamps: true }

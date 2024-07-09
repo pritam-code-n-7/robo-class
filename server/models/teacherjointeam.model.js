@@ -16,7 +16,7 @@ const teacherJoinTeamSchema = new Schema(
 		phoneNumber: {
 			type: String,
 			required: [true, "Phone Number is required"],
-			min:[10,"phone number should conatiain minimum of 10 digits"]
+			min:[10,"It must be 10 digit phone number"]
 		},
 		message: {
 			type: String,

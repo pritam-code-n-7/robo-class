@@ -15,7 +15,7 @@ const JoinTeacherModel = ({ onClick }) => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   //cors compatibility
-  axios.defaults.withCredentials = true;
+  //axios.defaults.withCredentials = true;
 
   const handleJoinClassSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const JoinTeacherModel = ({ onClick }) => {
       setNameError("");
     }
     axios
-      .post("http://localhost:3000/api/join-teacher-team", {
+      .post("http://localhost:3000/join-teacher-team", {
         email,
         fullName,
         phoneNumber,
