@@ -5,16 +5,16 @@ import { useState } from "react";
 import SearchBar from "../ui/SearchBar";
 import CoursesHover from "../header-ui/CoursesHover";
 import AboutUsHover from "../header-ui/AboutUsHover";
-import ExsistingHover from "../header-ui/ExsistingHover"
+import ExsistingHover from "../header-ui/ExsistingHover";
 
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isCoursesHovered, setIsCoursesHovered] = useState(false);
-  const [isBorderHovered, setIsBorderHovered] = useState(false)
-  const[isAboutUsHovered, setIsAboutUsHovered] = useState(false)
-  const[isSchoolHovered, setIsSchoolHovered] = useState(false)
-  const[isContactHovered, setIsContactHovered] = useState(false);
-  const[isExistingHovered, setIsExsistingHovered] = useState(false)
+  const [isBorderHovered, setIsBorderHovered] = useState(false);
+  const [isAboutUsHovered, setIsAboutUsHovered] = useState(false);
+  const [isSchoolHovered, setIsSchoolHovered] = useState(false);
+  const [isContactHovered, setIsContactHovered] = useState(false);
+  const [isExistingHovered, setIsExsistingHovered] = useState(false);
 
   //handle search bar open
   const handleSearchOpen = () => {
@@ -33,56 +33,68 @@ const Header = () => {
           <img src="/assets/image.png" alt="logo-image" loading="lazy" />
         </div>
         <div className="text-blue-400 font-semibold flex gap-3 font-montserrat">
-          <div
+          <button
             onMouseEnter={() => setIsCoursesHovered(true)}
-            onMouseLeave={() => setIsCoursesHovered(false)}
             className="flex items-center "
           >
             <p>Courses</p>
             <IoIosArrowDown />
-            {isCoursesHovered && <div className="z-20 absolute mt-56">
-              <CoursesHover />
-            </div>}
-          </div>
-          <div
-           onMouseEnter={() => setIsBorderHovered(true)}
-           onMouseLeave={() => setIsBorderHovered(false)}
-           >
+            {isCoursesHovered && (
+              <div
+                onMouseEnter={() => setIsCoursesHovered(true)}
+                onMouseLeave={() => setIsCoursesHovered(false)}
+               className="z-20 absolute mt-56">
+                <CoursesHover />
+              </div>
+            )}
+          </button>
+          <button
+            onMouseEnter={() => setIsBorderHovered(true)}
+            onMouseLeave={() => setIsBorderHovered(false)}
+          >
             <p className="tracking-wide">Homeschooling</p>
-            {isBorderHovered && <hr className="border border-green-500 "/>}
-          </div>
-          <div
-          onMouseEnter={() => setIsSchoolHovered(true)}
-          onMouseLeave={() => setIsSchoolHovered(false)}>
+            {isBorderHovered && <hr className="border border-green-500 " />}
+          </button>
+          <button
+            onMouseEnter={() => setIsSchoolHovered(true)}
+            onMouseLeave={() => setIsSchoolHovered(false)}
+          >
             <p>School/College enquiry</p>
-            {isSchoolHovered && <hr className="border border-green-500 "/>}
-          </div>
-          <div 
-           onMouseEnter={() => setIsAboutUsHovered(true)}
-           onMouseLeave={() => setIsAboutUsHovered(false)}
-          className="flex items-center">
+            {isSchoolHovered && <hr className="border border-green-500 " />}
+          </button>
+          <button
+            onMouseEnter={() => setIsAboutUsHovered(true)}
+            onMouseLeave={() => setIsAboutUsHovered(false)}
+            className="flex items-center"
+          >
             <p>About us</p>
             <IoIosArrowDown />
-            {isAboutUsHovered && <div className="z-20 absolute mt-56">
-              <AboutUsHover />
-            </div>}
-          </div>
-          <div
-           onMouseEnter={() => setIsContactHovered(true)}
-           onMouseLeave={() => setIsContactHovered(false)}>
+            {isAboutUsHovered && (
+              <div className="z-20 absolute mt-56">
+                <AboutUsHover />
+              </div>
+            )}
+          </button>
+          <button
+            onMouseEnter={() => setIsContactHovered(true)}
+            onMouseLeave={() => setIsContactHovered(false)}
+          >
             <p>Contact us</p>
-            {isContactHovered && <hr className="border border-green-500 "/>}
-          </div>
-          <div 
-          onMouseEnter={()=>setIsExsistingHovered(true)}
-          onMouseLeave={()=>setIsExsistingHovered(false)}
-          className="flex items-center">
+            {isContactHovered && <hr className="border border-green-500 " />}
+          </button>
+          <button
+            onMouseEnter={() => setIsExsistingHovered(true)}
+            onMouseLeave={() => setIsExsistingHovered(false)}
+            className="flex items-center"
+          >
             <p>Existing student</p>
             <IoIosArrowDown />
-            {isExistingHovered && 
-            <div className="z-20 absolute mt-20"><ExsistingHover/></div>
-            }
-          </div>
+            {isExistingHovered && (
+              <div className="z-20 absolute mt-20">
+                <ExsistingHover />
+              </div>
+            )}
+          </button>
         </div>
       </div>
       <div className="flex items-center gap-4">

@@ -5,13 +5,15 @@ const CoursesHover = () => {
     <div className="flex flex-col items-center h-auto w-52">
       <div className="text-white font-bold font-montserrat">
         {data.map((item, index) => (
-          <p
+          <div
             key={index}
             className="border-b border-gray-400 bg-gradient-to-r from-cyan-500 to-green-400 px-10 flex 
             rounded-b-lg py-2 text-balance"
           >
+          <button>
             {item.courses}
-          </p>
+            </button>
+          </div>
         ))}
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
-import Community from "../footer/Community";
-import CompanyInfo from "../footer/CompanyInfo";
-import Support from "../footer/Support";
-import FollowUs from "../footer/FollowUs";
+import Community from "../footer-ui/Community";
+import CompanyInfo from "../footer-ui/CompanyInfo";
+import Support from "../footer-ui/Support";
+import FollowUs from "../footer-ui/FollowUs";
 
 const LazyPaymentsComponent = lazy(() =>
-  import("../footer/PaymentsComponent")
+  import("../footer-ui/PaymentsComponent")
 );
 
 const Footer = () => {
