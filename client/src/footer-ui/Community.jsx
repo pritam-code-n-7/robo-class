@@ -10,7 +10,7 @@ const Community = () => {
   const[open, setOpen] = useState(false);
 
   //cors compatibility
-  //axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
 
   const handleMailSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const Community = () => {
     const sendEmail = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3000/join-community",
+          "https://robo-class-api.vercel.app/join-community",
           {
             email,
           }

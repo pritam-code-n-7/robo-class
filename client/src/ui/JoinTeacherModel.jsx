@@ -15,7 +15,7 @@ const JoinTeacherModel = ({ onClick }) => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   //cors compatibility
-  //axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
 
   const handleJoinClassSubmit = (e) => {
     e.preventDefault();
@@ -24,13 +24,13 @@ const JoinTeacherModel = ({ onClick }) => {
       .map((name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())
       .join(" ");
     if (fullName !== name) {
-      setNameError("name format shouldbe:(e.g. James Bond)");
+      setNameError("name format shouldbe:(e.g. James Ray)");
       return;
     } else {
       setNameError("");
     }
     axios
-      .post("http://localhost:3000/join-teacher-team", {
+      .post("https://robo-class-api.vercel.app/join-teacher-team", {
         email,
         fullName,
         phoneNumber,

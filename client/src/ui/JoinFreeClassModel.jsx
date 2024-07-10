@@ -15,7 +15,7 @@ const JoinFreeClassModel = ({ onClick }) => {
   const [errorAge, setErrorAge] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
 //cors compatibility
-//axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
   const handleJoinClassSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ const JoinFreeClassModel = ({ onClick }) => {
     }
 
     axios
-      .post("http://localhost:3000/join-free-class", {
+      .post("https://robo-class-api.vercel.app/join-free-class", {
         parentEmail,
         childName,
         childAge,
