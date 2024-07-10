@@ -10,7 +10,7 @@ const Community = () => {
   const[open, setOpen] = useState(false);
 
   //cors compatibility
-  axios.defaults.withCredentials = true;
+  //axios.defaults.withCredentials = true;
 
   const handleMailSubmit = (e) => {
     e.preventDefault();
