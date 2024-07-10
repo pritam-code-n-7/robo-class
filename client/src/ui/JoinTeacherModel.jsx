@@ -30,7 +30,7 @@ const JoinTeacherModel = ({ onClick }) => {
       setNameError("");
     }
     axios
-      .post("http://localhost:3000/join-teacher-team", {
+      .post("https://robo-class-api.vercel.app/join-teacher-team", {
         email,
         fullName,
         phoneNumber,
