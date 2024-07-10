@@ -29,7 +29,7 @@ const JoinFreeClassModel = ({ onClick }) => {
     }
 
     axios
-      .post("http://localhost:3000/join-free-class", {
+      .post("https://robo-class-api.vercel.app/join-free-class", {
         parentEmail,
         childName,
         childAge,
