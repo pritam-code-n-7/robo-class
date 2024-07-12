@@ -5,31 +5,32 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useState } from "react";
 import axios from "axios";
 import GetinTouchCard from "./GetinTouchCard";
-//import GetinTouchCard from "./GetinTouchCard";
+
 
 const JoinFreeClassModel = ({ onClick }) => {
   const [childName, setChildName] = useState("");
   const [childAge, setChildAge] = useState("");
   const [parentEmail, setParentEmail] = useState("");
   const [parentPhoneNumber, setParentPhoneNumber] = useState("");
-  const [errorAge, setErrorAge] = useState("");
+  const [error, setError] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-//cors compatibility
-//axios.defaults.withCredentials = true;
+
+  //cors compatibility
+  //axios.defaults.withCredentials = true;
 
   const handleJoinClassSubmit = (e) => {
     e.preventDefault();
-    //checking age validation
-    const age = parseInt(childAge, 10);
-    if (age < 3 || age > 20) {
-      setErrorAge("child age should be maximum of 3-20 years");
+
+    //form validation
+    if (!childName || !childAge || !parentEmail || !parentPhoneNumber) {
+      setError("All fields are required");
       return;
     } else {
-      setErrorAge("");
+      setError("");
     }
-
+//If validation successs then proceed
     axios
-      .post("https://robo-class-api.vercel.app/join-free-class", {
+      .post("https://robo-class-api.vercel.app/api/join-free-class", {
         parentEmail,
         childName,
         childAge,
@@ -43,13 +44,15 @@ const JoinFreeClassModel = ({ onClick }) => {
     setChildAge("");
     setParentEmail("");
     setParentPhoneNumber("");
+
     //custom message after successful submission
     setIsSubmit(true);
   };
+  
   //custom message close
-  const handleClose =()=>{
-    setIsSubmit(false)
-  }
+  const handleClose = () => {
+    setIsSubmit(false);
+  };
 
   return (
     <div className="w-2/3 p-5 text-black bg-white rounded font-montserrat border border-neutral-300 h-auto">
@@ -61,6 +64,7 @@ const JoinFreeClassModel = ({ onClick }) => {
           <IoMdCloseCircleOutline size={40} style={{ color: "red" }} />
         </button>
       </div>
+
       <form
         onSubmit={handleJoinClassSubmit}
         className="p-5 gap-2 flex flex-col items-center"
@@ -82,7 +86,6 @@ const JoinFreeClassModel = ({ onClick }) => {
               onChange={(e) => setChildAge(e.target.value)}
               className="py-3 px-16 rounded-full outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
             />
-            {errorAge && <p className="text-red-500">{errorAge}</p>}
           </div>
         </div>
         <div className="flex gap-2">
@@ -94,12 +97,16 @@ const JoinFreeClassModel = ({ onClick }) => {
             className="py-3 px-16 rounded-full outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
           />
           <InputField
-            type="tel"
+            type="text"
             placeholder="Parent Contact Number"
             value={parentPhoneNumber}
             onChange={(e) => setParentPhoneNumber(e.target.value)}
+            maxLength={10}
             className="py-3 px-16 rounded-full outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
           />
+        </div>
+        <div className="flex justify-center">
+          {error && <p className="text-red-500 font-bold">{error}</p>}
         </div>
         <div>{isSubmit && <GetinTouchCard onClick={handleClose} />}</div>
         <div>

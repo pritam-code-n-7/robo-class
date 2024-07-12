@@ -14,17 +14,18 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-	origin:["https://robo-class-frontend.vercel.app"],
+	origin:"https://robo-class-frontend.vercel.app",
 	methods:["POST","GET"],
 	credentials:true,
 }));
+
 
 // routes
 app.get("/", (req, res) => {
 	res.send("Hello World. This route is for testing only.");
 });
 
-app.post("/join-free-class", async (req, res) => {
+app.post("/api/join-free-class", async (req, res) => {
 	try {
 		const { parentEmail, childName, childAge, parentPhoneNumber } = req.body;
 
@@ -60,7 +61,7 @@ app.post("/join-free-class", async (req, res) => {
 	}
 });
 
-app.post("/join-community", async (req, res) => {
+app.post("/api/join-community", async (req, res) => {
 	try {
 		const { email } = req.body;
 		if (!email) {
@@ -90,7 +91,7 @@ app.post("/join-community", async (req, res) => {
 	}
 });
 
-app.post("/join-teacher-team", async (req, res) => {
+app.post("/api/join-teacher-team", async (req, res) => {
 	try {
 		const { email, fullName, phoneNumber, message } = req.body;
 

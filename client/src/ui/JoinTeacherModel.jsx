@@ -11,7 +11,7 @@ const JoinTeacherModel = ({ onClick }) => {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
-  const [nameError, setNameError] = useState("");
+  const [error, setError] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
 
   //cors compatibility
@@ -19,18 +19,17 @@ const JoinTeacherModel = ({ onClick }) => {
 
   const handleJoinClassSubmit = (e) => {
     e.preventDefault();
-    const name = fullName
-      .split(" ")
-      .map((name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())
-      .join(" ");
-    if (fullName !== name) {
-      setNameError("name format shouldbe:(e.g. James Ray)");
+
+    //form validation
+    if (!email || !fullName || !phoneNumber || !message) {
+      setError("All fields are required");
       return;
     } else {
-      setNameError("");
+      setError("");
     }
+    //If validation successfull then proceed
     axios
-      .post("https://robo-class-api.vercel.app/join-teacher-team", {
+      .post("https://robo-class-api.vercel.app/api/join-teacher-team", {
         email,
         fullName,
         phoneNumber,
@@ -40,13 +39,16 @@ const JoinTeacherModel = ({ onClick }) => {
       .catch((error) => console.error("data creating error", error));
 
     //reset input fields
-    setIsSubmit(true);
     setEmail("");
     setFullName("");
     setPhoneNumber("");
     setMessage("");
+    
+    //custom message after successfull submission
+    setIsSubmit(true);
   };
 
+  //handle close custom message
   const handleClose = () => {
     setIsSubmit(false);
   };
@@ -73,7 +75,6 @@ const JoinTeacherModel = ({ onClick }) => {
             onChange={(e) => setFullName(e.target.value)}
             className="py-3 px-16 rounded-full outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
           />
-          {nameError && <p className="text-red-500">{nameError}</p>}
         </div>
         <InputField
           type="text"
@@ -83,10 +84,11 @@ const JoinTeacherModel = ({ onClick }) => {
           className="py-3 px-16 rounded-full outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
         />
         <InputField
-          type="tel"
+          type="text"
           placeholder="Contact Number"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
+          maxLength={10}
           className="py-3 px-16 rounded-full outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
         />
         <InputField
@@ -96,6 +98,9 @@ const JoinTeacherModel = ({ onClick }) => {
           onChange={(e) => setMessage(e.target.value)}
           className="py-8 px-16 rounded-lg outline-none ring-1 ring-sky-500 focus:shadow-md focus:shadow-gray-300"
         />
+        <div className="flex justify-center font-bold">
+          {error && <p className="text-red-500">{error}</p>}
+        </div>
         {isSubmit && (
           <div>
             <GetinTouchCard onClick={handleClose} />

@@ -7,42 +7,44 @@ import ThankYou from "../ui/ThankYou";
 const Community = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const[open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   //cors compatibility
   //axios.defaults.withCredentials = true;
 
   const handleMailSubmit = (e) => {
     e.preventDefault();
-    //email validation check
-    if (email !== email.toLowerCase()) {
-      setError("email should contains lowercase letters");
+
+    //form validation 
+    if (!email) {
+      setError("This field is required");
       return;
     } else {
       setError("");
     }
+
     //if all validation passed then proceed
     const sendEmail = async () => {
       try {
-        const res = await axios.post(
-          "https://robo-class-api.vercel.app/join-community",
-          {
-            email,
-          }
-        );
-        console.log(res);
+        const response = await axios.post("https://robo-class-api.vercel.app/api/join-community", {
+          email,
+        });
+        console.log(response);
       } catch (error) {
-        console.error("Error fetching data", error);
+        console.error("Error creating data", error);
       }
     };
     sendEmail();
     setEmail("");
-    setOpen(true)
+
+    //open custom message upon successfull submission
+    setOpen(true);
   };
-  //handle response close
-  const handleClose = ()=>{
-    setOpen(false)
-  }
+  
+  //handle close custom message
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className="flex flex-col items-center text-white gap-6 font-montserrat">
@@ -58,9 +60,9 @@ const Community = () => {
             className="rounded-full py-3 px-10 leading-tight 
                 outline-none ring-1 ring-sky-500 shadow-md shadow-gray-400 text-black"
           />
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500 font-bold">{error}</p>}
         </div>
-{open && <ThankYou onClick={handleClose}/>}
+        {open && <ThankYou onClick={handleClose} />}
         <div className="mt-2">
           <Button
             name="Submit"
