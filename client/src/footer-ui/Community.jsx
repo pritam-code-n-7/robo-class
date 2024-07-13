@@ -14,6 +14,7 @@ const Community = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
+        //"http://localhost:3000/api/join-community"
         "https://robo-class-api.vercel.app/join-community",
         {
           email,

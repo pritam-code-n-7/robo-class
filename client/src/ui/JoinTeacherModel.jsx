@@ -19,6 +19,7 @@ const JoinTeacherModel = ({ onClick }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
+        //"http://localhost:3000/api/join-teacher-team"
         "https://robo-class-api.vercel.app/join-teacher-team",
         {
           email,
@@ -46,7 +47,7 @@ const JoinTeacherModel = ({ onClick }) => {
       setSubmitResponse("");
     }
   };
-
+  
   //handle close custom message
   const handleClose = () => {
     setIsSubmitResponse(false);
