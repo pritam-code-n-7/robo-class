@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "https://robo-class-frontend.vercel.app",
+    //origin: "http://localhost:5173",
     methods: ["POST", "GET"],
     credentials: true,
   })
@@ -32,25 +33,27 @@ app.post("/api/join-free-class", async (req, res) => {
 
     if (
       [parentEmail, childName, childAge, parentPhoneNumber].some(
-        (field) => field.trim() === ""
+        (field) => !field.trim()
       )
     ) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          status: 400,
-          message: "All fields are required",
-        });
+      return res.status(400).json({
+        success: false,
+        status: 400,
+        message: "All fields are required",
+      });
     }
 
-    const existingUser = await FreeClass.findOne({ parentEmail });
+    const existingUser = await FreeClass.find({
+      parentEmail,
+      parentPhoneNumber,
+    });
 
     if (existingUser) {
       return res.status(409).json({
         success: false,
         status: 409,
-        message: "User with this email already exists. Try with different one.",
+        message:
+          "User with this email or phone number already exists. Try with different one.",
       });
     }
 
@@ -69,13 +72,11 @@ app.post("/api/join-free-class", async (req, res) => {
     });
   } catch (error) {
     console.error(`Error: ${error.message}`);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        status: 500,
-        message: "Server Error. Please try again.",
-      });
+    return res.status(500).json({
+      success: false,
+      status: 500,
+      message: "Server Error. Please try again.",
+    });
   }
 });
 
@@ -108,13 +109,11 @@ app.post("/api/join-community", async (req, res) => {
     });
   } catch (error) {
     console.error(`Error: ${error.message}`);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        status: 500,
-        message: "Server Error. Please try again.",
-      });
+    return res.status(500).json({
+      success: false,
+      status: 500,
+      message: "Server Error. Please try again.",
+    });
   }
 });
 
@@ -123,26 +122,23 @@ app.post("/api/join-teacher-team", async (req, res) => {
     const { email, fullName, phoneNumber, message } = req.body;
 
     if (
-      [email, fullName, phoneNumber, message].some(
-        (field) => field.trim() === ""
-      )
+      [email, fullName, phoneNumber, message].some((field) => !field.trim())
     ) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          status: 400,
-          message: "All fields are required",
-        });
+      return res.status(400).json({
+        success: false,
+        status: 400,
+        message: "All fields are required",
+      });
     }
 
-    const existingTeacher = await TeamTeacher.findOne({ email });
+    const existingTeacher = await TeamTeacher.find({ email, phoneNumber });
 
     if (existingTeacher) {
       return res.status(409).json({
         success: false,
         status: 409,
-        message: "User with this email already exists. Try with different one.",
+        message:
+          "User with this email or phone number already exists. Try with different one.",
       });
     }
 
@@ -161,13 +157,11 @@ app.post("/api/join-teacher-team", async (req, res) => {
     });
   } catch (error) {
     console.error(`Error: ${error.message}`);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        status: 500,
-        message: "Server Error. Please try again.",
-      });
+    return res.status(500).json({
+      success: false,
+      status: 500,
+      message: "Server Error. Please try again.",
+    });
   }
 });
 

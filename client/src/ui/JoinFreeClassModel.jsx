@@ -6,52 +6,48 @@ import { useState } from "react";
 import axios from "axios";
 import GetinTouchCard from "./GetinTouchCard";
 
-
 const JoinFreeClassModel = ({ onClick }) => {
   const [childName, setChildName] = useState("");
   const [childAge, setChildAge] = useState("");
   const [parentEmail, setParentEmail] = useState("");
   const [parentPhoneNumber, setParentPhoneNumber] = useState("");
   const [error, setError] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [submitResponse, setSubmitResponse] = useState("");
+  const [isSubmitResponse, setIsSubmitResponse] = useState(false);
 
-  //cors compatibility
-  //axios.defaults.withCredentials = true;
-
-  const handleJoinClassSubmit = (e) => {
+  const handleJoinClassSubmit = async (e) => {
     e.preventDefault();
-
-    //form validation
-    if (!childName || !childAge || !parentEmail || !parentPhoneNumber) {
-      setError("All fields are required");
-      return;
-    } else {
+    try {
+      const response = await axios.post(
+        "https://robo-class-api.vercel.app/join-free-class",
+        {
+          parentEmail,
+          childName,
+          childAge,
+          parentPhoneNumber,
+        }
+      );
+      console.log(response);
+      setChildName("");
+      setChildAge("");
+      setParentEmail("");
+      setParentPhoneNumber("");
       setError("");
+      if (response.data.success) {
+        setSubmitResponse(response.data.message);
+      }
+
+      setIsSubmitResponse(true);
+    } catch (error) {
+      console.error("Error creating data", error);
+      setError(error.response.data.message);
+      setSubmitResponse("");
     }
-//If validation successs then proceed
-    axios
-      .post("https://robo-class-api.vercel.app/api/join-free-class", {
-        parentEmail,
-        childName,
-        childAge,
-        parentPhoneNumber,
-      })
-      .then((res) => console.log(res))
-      .catch((error) => console.error("data creating error", error));
-
-    //reset input fields
-    setChildName("");
-    setChildAge("");
-    setParentEmail("");
-    setParentPhoneNumber("");
-
-    //custom message after successful submission
-    setIsSubmit(true);
   };
-  
+
   //custom message close
   const handleClose = () => {
-    setIsSubmit(false);
+    setIsSubmitResponse(false);
   };
 
   return (
@@ -108,7 +104,11 @@ const JoinFreeClassModel = ({ onClick }) => {
         <div className="flex justify-center">
           {error && <p className="text-red-500 font-bold">{error}</p>}
         </div>
-        <div>{isSubmit && <GetinTouchCard onClick={handleClose} />}</div>
+        <div>
+          {isSubmitResponse && (
+            <GetinTouchCard onClick={handleClose} thankyou={submitResponse} />
+          )}
+        </div>
         <div>
           <Button
             name="Submit"

@@ -12,45 +12,44 @@ const JoinTeacherModel = ({ onClick }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [submitResponse, setSubmitResponse] = useState("");
+  const [isSubmitResponse, setIsSubmitResponse] = useState(false);
 
-  //cors compatibility
-  //axios.defaults.withCredentials = true;
-
-  const handleJoinClassSubmit = (e) => {
+  const handleJoinClassSubmit = async (e) => {
     e.preventDefault();
-
-    //form validation
-    if (!email || !fullName || !phoneNumber || !message) {
-      setError("All fields are required");
-      return;
-    } else {
+    try {
+      const response = await axios.post(
+        "https://robo-class-api.vercel.app/join-teacher-team",
+        {
+          email,
+          fullName,
+          phoneNumber,
+          message,
+        }
+      );
+      console.log(response);
+      //reset input fields
+      setEmail("");
+      setFullName("");
+      setPhoneNumber("");
+      setMessage("");
       setError("");
-    }
-    //If validation successfull then proceed
-    axios
-      .post("https://robo-class-api.vercel.app/api/join-teacher-team", {
-        email,
-        fullName,
-        phoneNumber,
-        message,
-      })
-      .then((res) => console.log(res))
-      .catch((error) => console.error("data creating error", error));
 
-    //reset input fields
-    setEmail("");
-    setFullName("");
-    setPhoneNumber("");
-    setMessage("");
-    
-    //custom message after successfull submission
-    setIsSubmit(true);
+      if (response.data.success) {
+        setSubmitResponse(response.data.message);
+      }
+
+      setIsSubmitResponse(true);
+    } catch (error) {
+      console.error("Error creating data", error);
+      setError(error.response.data.message);
+      setSubmitResponse("");
+    }
   };
 
   //handle close custom message
   const handleClose = () => {
-    setIsSubmit(false);
+    setIsSubmitResponse(false);
   };
 
   return (
@@ -101,9 +100,9 @@ const JoinTeacherModel = ({ onClick }) => {
         <div className="flex justify-center font-bold">
           {error && <p className="text-red-500">{error}</p>}
         </div>
-        {isSubmit && (
+        {isSubmitResponse && (
           <div>
-            <GetinTouchCard onClick={handleClose} />
+            <GetinTouchCard onClick={handleClose} thankyou={submitResponse} />
           </div>
         )}
         <div>

@@ -7,40 +7,29 @@ import ThankYou from "../ui/ThankYou";
 const Community = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState("");
 
-  //cors compatibility
-  //axios.defaults.withCredentials = true;
-
-  const handleMailSubmit = (e) => {
-    e.preventDefault();
-
-    //form validation 
-    if (!email) {
-      setError("This field is required");
-      return;
-    } else {
-      setError("");
-    }
-
-    //if all validation passed then proceed
-    const sendEmail = async () => {
-      try {
-        const response = await axios.post("https://robo-class-api.vercel.app/api/join-community", {
-          email,
-        });
-        console.log(response);
-      } catch (error) {
-        console.error("Error creating data", error);
-      }
-    };
-    sendEmail();
-    setEmail("");
-
-    //open custom message upon successfull submission
-    setOpen(true);
-  };
   
+  const handleMailSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://robo-class-api.vercel.app/join-community",
+        {
+          email,
+        }
+      );
+      console.log(response);
+      setEmail("");
+      setError("");
+      //open custom message upon successfull submission
+      setOpen(true);
+    } catch (error) {
+      console.error("Error creating data", error);
+      setError(error.response.data.message);
+    }
+  };
+
   //handle close custom message
   const handleClose = () => {
     setOpen(false);
