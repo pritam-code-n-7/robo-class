@@ -33,7 +33,7 @@ app.post("/join-free-class", async (req, res) => {
 
     if (
       [parentEmail, childName, childAge, parentPhoneNumber].some(
-        (field) => !field.trim()
+        (field) => field.trim() === ""
       )
     ) {
       return res.status(400).json({
@@ -43,9 +43,8 @@ app.post("/join-free-class", async (req, res) => {
       });
     }
 
-    const existingUser = await FreeClass.find({
-      parentEmail,
-      parentPhoneNumber,
+    const existingUser = await FreeClass.findOne({
+      $or: [{ parentEmail }, { parentPhoneNumber }],
     });
 
     if (existingUser) {
@@ -131,7 +130,9 @@ app.post("/join-teacher-team", async (req, res) => {
       });
     }
 
-    const existingTeacher = await TeamTeacher.find({ email, phoneNumber });
+    const existingTeacher = await TeamTeacher.findOne({
+      $or: [{ email }, { phoneNumber }],
+    });
 
     if (existingTeacher) {
       return res.status(409).json({
@@ -141,6 +142,7 @@ app.post("/join-teacher-team", async (req, res) => {
           "User with this email or phone number already exists. Try with different one.",
       });
     }
+    console.log(existingTeacher);
 
     await TeamTeacher.create({
       email,

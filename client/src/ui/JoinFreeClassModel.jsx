@@ -19,7 +19,7 @@ const JoinFreeClassModel = ({ onClick }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        //"http://localhost:3000/api/join-free-class"
+        //"http://localhost:3000/join-free-class",
         "https://robo-class-api.vercel.app/join-free-class",
         {
           parentEmail,

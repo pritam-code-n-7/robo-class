@@ -19,7 +19,7 @@ const JoinTeacherModel = ({ onClick }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        //"http://localhost:3000/api/join-teacher-team"
+       // "http://localhost:3000/join-teacher-team",
         "https://robo-class-api.vercel.app/join-teacher-team",
         {
           email,
