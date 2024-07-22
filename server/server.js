@@ -5,14 +5,11 @@ import { FreeClass } from "./models/bookfreeclass.model.js";
 import { JoinCommunity } from "./models/joincommunity.model.js";
 import { TeamTeacher } from "./models/teacherjointeam.model.js";
 
-const app = express();
-
 // mongodb connection
 connectDB();
 
+const app = express();
 // middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "https://robo-class-frontend.vercel.app",
@@ -21,6 +18,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.get("/", (req, res) => {
